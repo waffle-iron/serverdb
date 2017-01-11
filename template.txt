@@ -1,5 +1,6 @@
-mysql << EOF
-create table template.mach_template
+mysql -ujenkins -psupersecret << EOF
+create database template;
+create table template.plant_template
 (
 sn varchar(10) not null default '',
 model varchar(10) not null default '',

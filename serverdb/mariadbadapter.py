@@ -1,19 +1,34 @@
-import mysql.connector
-from mysql.connector import Error
+import PyMySQL as mariadb
 
-class dbm:
+def exsist(curdb):
+
+
+def parseout(que):
+    try:
+        a = "()',"
+	for char in a:
+            que = str(que).replace(char," ")
+        que = que.split()
+        return que
+
+class dbm(object):
     self.username = username
     self.password = password
-    def connect(self, username, password):
+    self.curdb = curdb
+    def __init__(self, username, password,curdb):
         try:
-            connection = mysql.connector.connect(host='localhost',
-                                                 database=curdb
-                                                 user=username
-                                                 password=password)
-            if connection.is_connected():
+            db = mariadb.connect(host, username, password, curdb)
+            if db.is_connected():
                 print("Connected!")
+                cursor = db.cursor()
             else:
-                return connection.is_connected()
+                return False
         except Error as e:
-            e = err
-    def 
+            return e
+    def input(self, que):
+	
+        cursor.execute(que)
+    def output(self, que):
+	cursor.execute(que)
+	data = cursor.fetchall()
+	data = data.parseout
