@@ -10,6 +10,7 @@ setup(
     description='Making a gui utility for what I normally have to stare into the void for',
     install_requires=[
 	'tkinter',
+	'pymysql',
 		     ],
     classifiers=[
         'Development Status :: Pre-Alpha',
