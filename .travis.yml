@@ -8,7 +8,7 @@ python:
     
 before_install: "pip install -r requirements.txt
 install: "python setup.py develop"
-script: true
+script: "coverage run tests/*
 
 
 branches:

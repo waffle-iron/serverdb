@@ -23,12 +23,12 @@ def parsein(que):
         que = que.split()
         return que
 
-    def connectdb(host, username, password, curdb):
+    def connectdb(host, username, password):
         try:
             db = mariadb.connect(host, username, password)
-            if db.is_connected():
-                print("Connected!")
+            if db.is_connected()
                 cursor = db.cursor()
+                return True
             else:
                 return False
         except Error as e:
@@ -42,77 +42,84 @@ def parsein(que):
     data = parsein(data)
 
     def updates(self,que):
-        updateque="UPDATE %s (SET sn='%s', \
-                   SET model='%s', \
-                   SET builddate='%d', \
-                   SET rma='%d', \
-                   SET casemake='%s', \
-                   SET casemodel='%s', \
-                   SET mobomake='%s', \
-                   SET mobomodel='%s', \
-                   SET mobosn='%s', \
-                   SET processormake='%s', \
-                   SET processormodel='%s', \
-                   SET processorsn='%s', \
-                   SET processorspeed='%d', \
-                   SET memorymake='%s', \
-                   SET memorytype='%s', \
-                   SET memorysize='%d', \
-                   SET memorynum='%s', \
-                   SET memorysn='%s', \
-                   SET hd0make='%s', \
-                   SET hd0model='%s', \
-                   SET hd0sn='%s', \
-                   SET hd0size='%d', \
-                   SET hd1make='%s', \
-                   SET hd1model='%s', \
-                   SET hd1sn='%s', \
-                   SET hd1size='%d', \
-                   SET vcardmake='%s', \
-                   SET vcardmodel='%s', \
-                   SET vcardsn='%s', \
-                   SET nic0make='%s', \
-                   SET nic0model='%s', \
-                   SET nic0macadd='%s', \
-                   SET nic0sn='%s', \
-                   SET nic1make='%s', \
-                   SET nic1model='%s', \
-                   SET nic1macadd='%s', \
-                   SET nic1sn='%s', \
-                   SET cdmake='%s', \
-                   SET cdmodel='%s', \
-                   SET cdsn='%s', \
-                   SET cdid='%s', \
-                   SET floppymake='%s', \
-                   SET floppymodel='%s', \
-                   SET floppysn='s%', \
-                   SET fannum='%d', \
-                   SET hdaddaptermake='%s', \
-                   SET hdaddaptermodel='%s', \
-                   SET hdaddaptersn='%s', \
-                   SET testrun='%s', \
-                   SET linuxdistro='%s', \
-                   SET linuxvernum='%s', \
-                   timezone varchar(20) not null default '',
-timedst char(1) not null default '',
-nic0ip varchar(20) not null default '',
-nic0netmask varchar(20) not null default '',
-nic0gw varchar(20) not null default '',
-nic0dns varchar(20) not null default '',
-nic1ip varchar(20) not null default '',
-nic1netmask varchar(20) not null default '',
-nic1gw varchar(20) not null default '',
-nic1dns varchar(20) not null default '',
-ups char(1) not null default '',
-pstarver varchar(10) not null default '',
-pstartype varchar(10) not null default '',
-upgrade char(1) not null default '',
-upver varchar(10) not null default '',
-lastbackup date not null default '00000000',
-auth varchar(30) not null default '',
-checklist char(1) not null default '',
-comments text null,
-
+        updateque="UPDATE %s SET sn='%s', \
+                                 model='%s', \
+                                 builddate='%d', \
+                                 rma='%d', \
+                                 casemake='%s', \
+                                 casemodel='%s', \
+                                 mobomake='%s', \
+                                 mobomodel='%s', \
+                                 mobosn='%s', \
+                                 processormake='%s', \
+                                 processormodel='%s', \
+                                 processorsn='%s', \
+                                 processorspeed='%d', \
+                                 memorymake='%s', \
+                                 memorytype='%s', \
+                                 memorysize='%d', \
+                                 memorynum='%s', \
+                                 memorysn='%s', \
+                                 hd0make='%s', \
+                                 hd0model='%s', \
+                                 hd0sn='%s', \
+                                 hd0size='%d', \
+                                 hd1make='%s', \
+                                 hd1model='%s', \
+                                 hd1sn='%s', \
+                                 hd1size='%d', \
+                                 vcardmake='%s', \
+                                 vcardmodel='%s', \
+                                 vcardsn='%s', \
+                                 nic0make='%s', \
+                                 nic0model='%s', \
+                                 nic0macadd='%s', \
+                                 nic0sn='%s', \
+                                 nic1make='%s', \
+                                 nic1model='%s', \
+                                 nic1macadd='%s', \
+                                 nic1sn='%s', \
+                                 cdmake='%s', \
+                                 cdmodel='%s', \
+                                 cdsn='%s', \
+                                 cdid='%s', \
+                                 floppymake='%s', \
+                                 floppymodel='%s', \
+                                 floppysn='s%', \
+                                 fannum='%d', \
+                                 hdaddaptermake='%s', \
+                                 hdaddaptermodel='%s', \
+                                 hdaddaptersn='%s', \
+                                 testrun='%s', \
+                                 linuxdistro='%s', \
+                                 linuxvernum='%s', \
+                                 timezone='%s', \
+                                 timedst='%s', \
+                                 nic0ip='%s', \
+                                 nic0netmas k='%s', \
+                                 nic0gw='%s', \
+                                 nic0dns='%s', \
+                                 nic1ip='%s', \
+                                 nic1netmask='%s', \
+                                 nic1gw='%s', \
+                                 nic1dns='%s', \
+                                 ups='%s', \
+                                 pstarver='%s', \
+                                 pstartype='%s', \
+                                 upgrade='%s', \
+                                 upver='%s', \
+                                 lastbackup='%d', \
+                                 auth='%s', \
+                                 checklist='%s', \
+                                 comments='%s', \
+                             WHERE sn='%s';"
+        try:
+            cursor.execute(updateque)
+            db.commit()
+            return True
+        except:
+            db.rollback()
+            return False
 
 
 
