@@ -9,7 +9,7 @@ def exsist(curdb):
     for char in a:
         b = str(b).replace(char," ")
     b = b.split()
-    if (database == False):
+    if curdb not in b:
         print("Company not found!")
         return False
     else:
@@ -17,10 +17,9 @@ def exsist(curdb):
 
 
 def parsein(que):
-    try:
-        a = "()',"
+    a = "()',"
     for char in a:
-            que = str(que).replace(char," ")
+        que = str(que).replace(char," ")
         que = que.split()
         return que
 
@@ -72,7 +71,47 @@ def parsein(que):
                    SET vcardmake='%s', \
                    SET vcardmodel='%s', \
                    SET vcardsn='%s', \
-                   SET 
+                   SET nic0make='%s', \
+                   SET nic0model='%s', \
+                   SET nic0macadd='%s', \
+                   SET nic0sn='%s', \
+                   SET nic1make='%s', \
+                   SET nic1model='%s', \
+                   SET nic1macadd='%s', \
+                   SET nic1sn='%s', \
+                   SET cdmake='%s', \
+                   SET cdmodel='%s', \
+                   SET cdsn='%s', \
+                   SET cdid='%s', \
+                   SET floppymake='%s', \
+                   SET floppymodel='%s', \
+                   SET floppysn='s%', \
+                   SET fannum='%d', \
+                   SET hdaddaptermake='%s', \
+                   SET hdaddaptermodel='%s', \
+                   SET hdaddaptersn='%s', \
+                   SET testrun='%s', \
+                   SET linuxdistro='%s', \
+                   SET linuxvernum='%s', \
+                   timezone varchar(20) not null default '',
+timedst char(1) not null default '',
+nic0ip varchar(20) not null default '',
+nic0netmask varchar(20) not null default '',
+nic0gw varchar(20) not null default '',
+nic0dns varchar(20) not null default '',
+nic1ip varchar(20) not null default '',
+nic1netmask varchar(20) not null default '',
+nic1gw varchar(20) not null default '',
+nic1dns varchar(20) not null default '',
+ups char(1) not null default '',
+pstarver varchar(10) not null default '',
+pstartype varchar(10) not null default '',
+upgrade char(1) not null default '',
+upver varchar(10) not null default '',
+lastbackup date not null default '00000000',
+auth varchar(30) not null default '',
+checklist char(1) not null default '',
+comments text null,
 
 
 
