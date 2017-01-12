@@ -1,16 +1,22 @@
 import pymysql as mariadb
 from pymysql import Error
 
-def exsist(curdb):
+def dexsist(curdb):
     ex = "SHOW DATABASES"
     cursor.execute(ex)
-    a = "()',"
     b = cursor.fetchall()
-    for char in a:
-        b = str(b).replace(char," ")
-    b = b.split()
-    if curdb not in b:
-        print("Company not found!")
+    c = parsein(b)
+    if curdb not in c:
+        return False
+    else:
+        return True
+
+def texsist(curtable):
+    ex = "SHOW TABLES"
+    cursor.execute(ex)
+    b = cursor.fetchall()
+    c = parsein(b)
+    if curtable not in c:
         return False
     else:
         return True
@@ -26,20 +32,22 @@ def parsein(que):
     def connectdb(host, username, password):
         try:
             db = mariadb.connect(host, username, password)
-            if db.is_connected()
+            if db.is_connected():
                 cursor = db.cursor()
                 return True
             else:
                 return False
         except Error as e:
             return e
-    def outputs(self, que):
+    def outputs(que):
     
         cursor.execute(que)
-    def inputs(self, que):
-    cursor.execute(que)
-    data = cursor.fetchall()
-    data = parsein(data)
+    def inputs(que):
+        cursor.execute(que)
+        data = cursor.fetchall()
+        data = parsein(data)
+        return data
+    
 
     def updates(self,que):
         updateque="UPDATE %s SET sn='%s', \
@@ -112,7 +120,7 @@ def parsein(que):
                                  auth='%s', \
                                  checklist='%s', \
                                  comments='%s', \
-                             WHERE sn='%s';"
+                             WHERE sn='%s'"
         try:
             cursor.execute(updateque)
             db.commit()
