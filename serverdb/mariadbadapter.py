@@ -2,20 +2,22 @@ import pymysql as mariadb
 from pymysql import Error
 
 def dexsist(curdb):
+    """checks for database exsistance"""
     ex = "SHOW DATABASES"
     cursor.execute(ex)
-    b = cursor.fetchall()
-    c = parsein(b)
-    if curdb not in c:
+    temp1 = cursor.fetchall()
+    temp1 = parsein(temp1)
+    if curdb not in temp1:
         return False
     else:
         return True
 
 def texsist(curtable):
+    """checks for table exsistance"""
     ex = "SHOW TABLES"
     cursor.execute(ex)
-    b = cursor.fetchall()
-    c = parsein(b)
+    temp1 = cursor.fetchall()
+    temp1 = parsein(temp1)
     if curtable not in c:
         return False
     else:
@@ -31,9 +33,9 @@ def parsein(que):
 
     def connectdb(host, username, password):
         try:
-            db = mariadb.connect(host, username, password)
-            if db.is_connected():
-                cursor = db.cursor()
+            dab = mariadb.connect(host, username, password)
+            if dab.is_connected():
+                cursor = dab.cursor()
                 return True
             else:
                 return False

@@ -1,5 +1,3 @@
-notifications:
-  email: false
 addons:
   mariadb: '10.0'
 sudo: false
