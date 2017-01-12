@@ -1,22 +1,14 @@
 import pymysql as mariadb
-
-yo = 1
-
-    if (value == "new"):
-        temp = exsist(curdb)
-        if (temp == True):
-            parseout(que)
-            print ("query prepared")
-            outputs(que)
-            print ("committed")
-        else:
-            value = "update"
-    if (value == "update"):
-        que
-
+from pymysql import Error
 
 def exsist(curdb):
-    database = dbm(username, password, curdb)
+    ex = "SHOW DATABASES"
+    cursor.execute(ex)
+    a = "()',"
+    b = cursor.fetchall()
+    for char in a:
+        b = str(b).replace(char," ")
+    b = b.split()
     if (database == False):
         print("Company not found!")
         return False
@@ -32,9 +24,9 @@ def parsein(que):
         que = que.split()
         return que
 
-    def connectdb(username, password, curdb):
+    def connectdb(host, username, password, curdb):
         try:
-            db = mariadb.connect(host, username, password, curdb)
+            db = mariadb.connect(host, username, password)
             if db.is_connected():
                 print("Connected!")
                 cursor = db.cursor()
