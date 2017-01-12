@@ -1,4 +1,4 @@
-import PyMySQL as mariadb
+import pymysql as mariadb
 
 yo = 1
 
@@ -32,11 +32,7 @@ def parsein(que):
         que = que.split()
         return que
 
-class dbm(object):
-    self.username = username
-    self.password = password
-    self.curdb = curdb
-    def __init__(self, username, password,curdb):
+    def connectdb(username, password, curdb):
         try:
             db = mariadb.connect(host, username, password, curdb)
             if db.is_connected():
@@ -90,7 +86,7 @@ class dbm(object):
 
 
 
-    def close(self):
+    def close():
         database.close()
 
 
