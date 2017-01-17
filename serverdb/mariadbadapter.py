@@ -1,19 +1,25 @@
 import pymysql as mariadb
 from pymysql import Error
-import logging as log
+import logging
 
 def dexsist(curdb):
     """checks for database exsistance"""
-    ex = "SHOW DATABASES"
-    cursor.execute(ex)
-    temp1 = cursor.fetchall()
-    temp1 = parsein(temp1)
-    if curdb not in temp1:
-        logging.info('database not found')
-        return False
-    else:
-        logging.debug('database found')
-        return True
+    try:
+        logging.debug('sending sql query')
+        ex = "SHOW DATABASES"
+        cursor.execute(ex)
+        logging.debug('fetching data')
+        temp1 = cursor.fetchall()
+        temp1 = parsein(temp1)
+        if curdb not in temp1:
+            logging.info('database not found')
+            return False
+        else:
+            logging.debug('database found')
+            return True
+    except Error as e:
+        logging.critical('something went wrong with the database')
+        return e
 
 def texsist(curdb, curtable):
     """checks for table exsistance"""
@@ -91,17 +97,19 @@ def parsein(que):
         try:
             cursor.execute(text)
             dab.commit()
-            logging.info('new database and table created')
+            logging.info('new database created')
             return True
         except:
+            logging.critical('failed to create new company database')
             dab.rollback()
-            logging.error('
             return False
         try:
             cursor.execute(text1)
             dab.commit()
+            logging.info('new table created')
             return True
         except:
+            logging.critical('failed to create table')
             dab.rollback()
             return False
 
