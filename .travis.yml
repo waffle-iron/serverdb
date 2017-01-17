@@ -1,5 +1,9 @@
+notifications:
+  email: false
 addons:
-  mariadb: '10.0'
+  apt:
+    packages:
+    - mariadb
 sudo: false
 language: python
 python:

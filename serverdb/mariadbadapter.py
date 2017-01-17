@@ -18,34 +18,44 @@ def dexsist(curdb):
             logging.debug('database found')
             return True
     except Error as e:
-        logging.critical('something went wrong with the database')
+        logging.critical('something went wrong with the database %s') % (e)
         return e
 
 def texsist(curdb, curtable):
     """checks for table exsistance"""
     ex = "USE '%s'; SHOW TABLES" % (curdb)
-    cursor.execute(ex)
-    temp1 = cursor.fetchall()
-    temp1 = parsein(temp1)
-    if curtable not in temp1:
-        logging.info('table not found')
-        return False
-    else:
-        logging.debug('table found')
+    try:
+        cursor.execute(ex)
+        temp1 = cursor.fetchall()
+        temp1 = parsein(temp1)
+        if curtable not in temp1:
+            logging.info('table not found')
+            return False
+        else:
+            logging.debug('table found')
         return True
+    except Error as e:
+        logging.critical('something went wrong with the database %s') % (e)
+        return e
 
 def snexsist(cursn, curtable, curdb):
     """checks for already exsisting entry"""
-    ex = "USE '%s'; SELECT sn FROM '%s' WHERE sn = '%s'" % (curdb, curtable, cursn)
-    cursor.execute(ex)
-    temp1 = cursor.fetchall()
-    temp1 = parsein(temp1)
-    if cursn not in temp1:
-        logging.info('serial number not found')
-        return False
-    else:
-        logging.debug('serial number found')
+    try:
+        logging.debug('building sql query')
+        ex = "USE '%s'; SELECT sn FROM '%s' WHERE sn = '%s'" % (curdb, curtable, cursn)
+        logging.debug('sending query')
+        cursor.execute(ex)
+        logging.debug('fetching data')
+        temp1 = cursor.fetchall()
+        temp1 = parsein(temp1)
+        if cursn not in temp1:
+            logging.info('serial number not found')
+            return False
+        else:
+            logging.debug('serial number found')
         return True
+    except Error as e:
+        logging.critical('something went wrong with the database %s') % (e)
 
 def parsein(que):
     """removes extraneous characters and splits into indexable tuple"""
@@ -57,40 +67,48 @@ def parsein(que):
             que = que.split()
         logging.debug('parsing complete')
         return que
-    except:
-        logging.critical('UNABLE TO PARSE STRING!')
+    except Exception as e:
+        logging.critical('UNABLE TO PARSE STRING! error code %s') % (e)
         return False
 
     def connectdb(host, username, password):
         """connects to sql instance and returns true on no errors"""
-        try:
-            dab = mariadb.connect(host, username, password)
-            if dab.is_connected():
-                cursor = dab.cursor()
-                logging.debug('connected to database')
-                return True
-            else:
-                logging.critical('Unable to connect to host')
-                return False
-        except OperationalError as e:
-            logging.critical('UNABLE TO CONNECT TO HOST')
-            return e
-    def outputs(que):
+        con = 0
+        while (con == 0):
+            for i in 5:
+                try:
+                    dab = mariadb.connect(host, username, password)
+                    if dab.is_connected():
+                        cursor = dab.cursor()
+                        logging.debug('connected to database')
+                        con = 1
+                        return True
+                except Error as e:
+                    logging.critical('UNABLE TO CONNECT TO HOST %s') % (e)
+                    return e
+            con = 1
+        logging.critical('UNABLE TO CONNECT TO HOST')
+                    
+    def write(que):
     
         cursor.execute(que)
-    def inputs(que):
+    def read(que):
         """takes sql query, fetches all returned info and returns tuple"""
-        logging.debug('sending query')
-        cursor.execute(que)
-        logging.debug('fetching data')
-        data = cursor.fetchall()
-        data = parsein(data)
-        logging.debug('returning data to parent')
-        return data
+        try:
+            logging.debug('sending query')
+            cursor.execute(que)
+            logging.debug('fetching data')
+            data = cursor.fetchall()
+            data = parsein(data)
+            logging.debug('returning data to parent')
+            return data
+        except Error as e:
+            logging.critical('something went wrong in the database %s') % (e)
+            return e
 
     def newdb(curdb, curtable):
         """creates new company db and creates new table from template"""
-        text = "CREATE DATABASE '%s' % (curdb)
+        text = "CREATE DATABASE '%s'" % (curdb)
         logging.debug('setting sql query for db')
         text1 = tbtemplate(curdb, curtable)
         logging.debug('setting sql for table template')
@@ -99,8 +117,8 @@ def parsein(que):
             dab.commit()
             logging.info('new database created')
             return True
-        except:
-            logging.critical('failed to create new company database')
+        except Error as e:
+            logging.critical('failed to create new company database %s') % (e)
             dab.rollback()
             return False
         try:
@@ -115,6 +133,7 @@ def parsein(que):
 
     def updates(que):
         """turns list into sql query and commits to db"""
+        logging.debug('preparing sql query')
         updateque="UPDATE %s SET sn='%s', \
                                  model='%s', \
                                  builddate='%d', \
@@ -187,10 +206,12 @@ def parsein(que):
                                  comments='%s', \
                              WHERE sn='%s'" % (que)
         try:
+            logging.info sending query
             cursor.execute(updateque)
             dab.commit()
             return True
-        except:
+        except Error as e:
+            logging.critical('Failed to commit to database! %s') % (e)
             dab.rollback()
             return False
 
