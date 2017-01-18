@@ -1,5 +1,5 @@
 import tkinter
-from tkinter import ttk
+from tkinter import ttk, messagebox
 
 class querier(ttk.Frame):
     """The db querier gui and functions"""
@@ -10,6 +10,7 @@ class querier(ttk.Frame):
    
     def init_pass(self):
         self.username = "historycard"
+        self.password = "pstar"
         
 
     def init_gui(self):
@@ -23,9 +24,29 @@ class querier(ttk.Frame):
         
         self.menubar = tkinter.Menu(self.root)
         
-        self.menu_file = tkinter.Menu(self, menubar)
+        self.menu_file = tkinter.Menu(self.menubar)
         self.menu_file.add_command(label='Exit', command=self.on_quit)
-        self.menu_file.add_command(label='View', command=self.view
+
+        self.menu_edit = tkinter.Menu(self.menubar)
+        self.menu_edit.add_command(label='View', command=self.view)
+
+        self.menubar.add_cascade(menu=self.menu_file, label='File')
+        self.menubar.add_cascade(menu=self.menu_edit, label='Edit')
+
+        self.root.config(menu=self.menubar)
+
+    def on_quit(self):
+        temp = tkinter.messagebox.askokcancel("Server History Viewer", "Are you sure you want to quit?")
+        print(temp)
+        if (temp == 1):
+            quit()
+        else:
+            pass
+    def view(self):
+        hfh
+
+    def ipinput(self):
+        
         
 
 
