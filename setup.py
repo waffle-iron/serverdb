@@ -11,14 +11,15 @@ setup(
     install_requires=[
 	'tkinter',
 	'pymysql',
+        'codacy-coverage',
 		     ],
     classifiers=[
         'Development Status :: Pre-Alpha',
-        'Intended Audience :: Myself',
+        'Intended Audience :: Employees',
         'License :: OSI Approved :: GNU Affero General Public License v3 (GAGPLv3)',
         'Programming Language :: Python :: 3.6',
     ],
-    url='https://github.com/jwaggy/booleans',
+    url='https://github.com/jwaggy/serverdb',
     license='GAGPL-3.0',
     packages=find_packages(),
 )

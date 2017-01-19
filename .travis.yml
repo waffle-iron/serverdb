@@ -1,3 +1,6 @@
+language: python
+python:
+    - 3.6
 notifications:
   email: false
 addons:
@@ -5,13 +8,9 @@ addons:
     packages:
     - mariadb
 sudo: false
-language: python
-python:
-    - 3.6
-    
-before_install: "pip install -r requirements.txt
+before_install: "pip install -r requirements.txt"
 install: "python setup.py develop"
-script: "coverage run tests/*
+script: "coverage run tests/*"
 
 
 branches:

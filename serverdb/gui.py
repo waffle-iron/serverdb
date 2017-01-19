@@ -7,23 +7,22 @@ class querier(ttk.Frame):
         ttk.Frame.__init__(self, parent, *args, **kwargs)
         self.root = parent
         self.init_gui()
-   
+
     def init_pass(self):
         self.username = "historycard"
         self.password = "pstar"
-        
 
     def init_gui(self):
         """builds initial gui for db commit"""
         self.root.title('Server History Card Viewer')
         self.root.option_add('*tearOff', 'FALSE')
-        
+
         self.root.wm_attributes('-zoomed', True)
-        
+
         self.grid(column=0, row=0, sticky='nsew')
-        
+
         self.menubar = tkinter.Menu(self.root)
-        
+
         self.menu_file = tkinter.Menu(self.menubar)
         self.menu_file.add_command(label='Exit', command=self.on_quit)
 
@@ -45,9 +44,6 @@ class querier(ttk.Frame):
     def view(self):
         hfh
 
-    def ipinput(self):
-        
-        
 
 
 

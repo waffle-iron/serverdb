@@ -1,8 +1,6 @@
 import pymysql as mariadb
 from pymysql import Error
 import logging
-import ipaddress
-from ipaddress import IPv4Address as ipv4address
 
 def dexsist(curdb):
     """checks for database exsistance"""
@@ -49,6 +47,7 @@ def snexsist(cursn, curtable, curdb):
         cursor.execute(ex)
         logging.debug('fetching data')
         temp1 = cursor.fetchall()
+        logging.debug('parsing...')
         temp1 = parsein(temp1)
         if cursn not in temp1:
             logging.info('serial number not found')
@@ -91,18 +90,6 @@ def parsein(que):
             con = 1
         logging.critical('UNABLE TO CONNECT TO HOST')
 
-    def ip_is_valid(host):
-        """checks for a valid host ip"""
-        try:
-            logging.debug('checking if ip is valid...')
-            ipv4address(str(host))
-            valid = True
-            logging.debug('Valid!')
-            return valid
-        except:
-            valid = False
-            logging.warning('Ip not valid!')
-            return valid
 
     def read(que):
         """takes sql query, fetches all returned info and returns tuple"""
