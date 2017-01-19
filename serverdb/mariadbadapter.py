@@ -17,9 +17,9 @@ def dexsist(curdb):
         else:
             logging.debug('database found')
             return True
-    except Error as e:
-        logging.critical('something went wrong with the database %s') % (e)
-        return e
+    except Error as excepts:
+        logging.critical('something went wrong with the database %s') % (excepts)
+        return excepts
 
 def texsist(curdb, curtable):
     """checks for table exsistance"""
@@ -34,9 +34,9 @@ def texsist(curdb, curtable):
         else:
             logging.debug('table found')
         return True
-    except Error as e:
-        logging.critical('something went wrong with the database %s') % (e)
-        return e
+    except Error as excepts:
+        logging.critical('something went wrong with the database %s') % (excepts)
+        return excepts
 
 def snexsist(cursn, curtable, curdb):
     """checks for already exsisting entry"""
@@ -55,8 +55,8 @@ def snexsist(cursn, curtable, curdb):
         else:
             logging.debug('serial number found')
         return True
-    except Error as e:
-        logging.critical('something went wrong with the database %s') % (e)
+    except Error as excepts:
+        logging.critical('something went wrong with the database %s') % (excepts)
 
 def parsein(que):
     """removes extraneous characters and splits into indexable tuple"""
@@ -68,8 +68,8 @@ def parsein(que):
             que = que.split()
         logging.debug('parsing complete')
         return que
-    except Exception as e:
-        logging.critical('UNABLE TO PARSE STRING! error code %s') % (e)
+    except Exception as excepts:
+        logging.critical('UNABLE TO PARSE STRING! error code %s') % (excepts)
         return False
 
     def connectdb(host, username, password):
@@ -84,15 +84,17 @@ def parsein(que):
                         logging.debug('connected to database')
                         con = 1
                         return True
-                except Error as e:
-                    logging.critical('UNABLE TO CONNECT TO HOST %s') % (e)
-                    return e
+                except Error as excepts:
+                    logging.critical('UNABLE TO CONNECT TO HOST %s') % (excepts)
+                    return excepts
             con = 1
         logging.critical('UNABLE TO CONNECT TO HOST')
 
 
-    def read(que):
+    def read(cursn, curtable, curdb):
         """takes sql query, fetches all returned info and returns tuple"""
+        logging.debug('preparing sql query')
+        que = "USE '%s'; SELECT sn FROM '%s' WHERE sn = '%s'" % (curdb, curtable, cursn)
         try:
             logging.debug('sending query')
             cursor.execute(que)
@@ -101,9 +103,9 @@ def parsein(que):
             data = parsein(data)
             logging.debug('returning data to parent')
             return data
-        except Error as e:
-            logging.critical('something went wrong in the database %s') % (e)
-            return e
+        except Error as excepts:
+            logging.critical('something went wrong in the database %s') % (excepts)
+            return excepts
 
     def newdb(curdb, curtable):
         """creates new company db and creates new table from template"""
@@ -116,8 +118,8 @@ def parsein(que):
             dab.commit()
             logging.info('new database created')
             return True
-        except Error as e:
-            logging.critical('failed to create new company database %s') % (e)
+        except Error as excepts:
+            logging.critical('failed to create new company database %s') % (excepts)
             dab.rollback()
             return False
         try:
@@ -209,8 +211,8 @@ def parsein(que):
             cursor.execute(updateque)
             dab.commit()
             return True
-        except Error as e:
-            logging.critical('Failed to commit to database! %s') % (e)
+        except Error as excepts:
+            logging.critical('Failed to commit to database! %s') % (excepts)
             dab.rollback()
             return False
 

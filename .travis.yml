@@ -6,7 +6,8 @@ notifications:
 addons:
   apt:
     packages:
-    - mariadb
+    - mariadb-server
+    - mariadb-client
 sudo: false
 before_install: "pip install -r requirements.txt"
 install: "python setup.py develop"

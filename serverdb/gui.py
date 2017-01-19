@@ -1,14 +1,12 @@
 import tkinter
 from tkinter import ttk, messagebox
 
-class querier(ttk.Frame):
+class Querier(ttk.Frame):
     """The db querier gui and functions"""
     def __init__(self, parent, *args, **kwargs):
         ttk.Frame.__init__(self, parent, *args, **kwargs)
         self.root = parent
         self.init_gui()
-
-    def init_pass(self):
         self.username = "historycard"
         self.password = "pstar"
 
@@ -34,8 +32,9 @@ class querier(ttk.Frame):
 
         self.root.config(menu=self.menubar)
 
-    def on_quit(self):
-        temp = tkinter.messagebox.askokcancel("Server History Viewer", "Are you sure you want to quit?")
+    def on_quit():
+        """on quit func"""
+        temp = messagebox.askokcancel("Server History Viewer", "Are you sure you want to quit?")
         print(temp)
         if (temp == 1):
             quit()
@@ -44,7 +43,19 @@ class querier(ttk.Frame):
     def view(self):
         hfh
 
-
+    def get_hostname():
+        hostbox = tkinter.Toplevel(root)
+        hostbox.title('Host Name')
+        label1 = Label(hostbox, text="Enter your host name")
+        label1.grid(column=1, row=0)
+        entry1 = tkinter.Entry(hostbox)
+        entry1.grid(column=2, row=0, columnspan=2)
+        but1 = tkinter.Button(hostbox, text="OK", command=get)
+        but1.grid(column=2, row=1)
+        def getter():
+            ip = str(entry1.get())
+            return ip
+        return ip
 
 
 
